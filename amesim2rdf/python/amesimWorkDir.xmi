@@ -1,0 +1,1123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lms.amesim:WorkingDirectory xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:lms.amesim="http://www.lmsintl.com/LMS-Imagine-Lab-AMESim/">
+	<circuit name="BrakingSystem">
+		<component name="forcecon" subModelName="FORC" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/forcecon/1" type="signal"/>
+			<port id="BrakingSystem/forcecon/2" type="lshaft"/>
+		</component>
+		<component name="signal03" subModelName="UD00" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<parameter dataPath="rp2@signal03" value="0" unit="s" title="time at which duty cycle starts"/>
+			<parameter dataPath="rp3@signal03" value="0" unit="null" title="output at start of stage 1"/>
+			<parameter dataPath="rp4@signal03" value="400" unit="null" title="output at end of stage 1"/>
+			<parameter dataPath="rp5@signal03" value="0.5" unit="s" title="duration of stage 1"/>
+			<parameter dataPath="rp6@signal03" value="400" unit="null" title="output at start of stage 2"/>
+			<parameter dataPath="rp7@signal03" value="0" unit="null" title="output at end of stage 2"/>
+			<parameter dataPath="rp8@signal03" value="0.5" unit="s" title="duration of stage 2"/>
+			<parameter dataPath="rp9@signal03" value="0" unit="null" title="output at start of stage 3"/>
+			<parameter dataPath="rp10@signal03" value="0" unit="null" title="output at end of stage 3"/>
+			<parameter dataPath="rp11@signal03" value="1" unit="s" title="duration of stage 3"/>
+			<parameter dataPath="rp12@signal03" value="0" unit="null" title="output at start of stage 4"/>
+			<parameter dataPath="rp13@signal03" value="400" unit="null" title="output at end of stage 4"/>
+			<parameter dataPath="rp14@signal03" value="0.5" unit="s" title="duration of stage 4"/>
+			<parameter dataPath="rp15@signal03" value="400" unit="null" title="output at start of stage 5"/>
+			<parameter dataPath="rp16@signal03" value="0" unit="null" title="output at end of stage 5"/>
+			<parameter dataPath="rp17@signal03" value="0.5" unit="s" title="duration of stage 5"/>
+			<parameter dataPath="rp18@signal03" value="0" unit="null" title="output at start of stage 6"/>
+			<parameter dataPath="rp19@signal03" value="400" unit="null" title="output at end of stage 6"/>
+			<parameter dataPath="rp20@signal03" value="0.5" unit="s" title="duration of stage 6"/>
+			<parameter dataPath="rp21@signal03" value="400" unit="null" title="output at start of stage 7"/>
+			<parameter dataPath="rp22@signal03" value="0" unit="null" title="output at end of stage 7"/>
+			<parameter dataPath="rp23@signal03" value="0.5" unit="s" title="duration of stage 7"/>
+			<parameter dataPath="rp24@signal03" value="0" unit="null" title="output at start of stage 8"/>
+			<parameter dataPath="rp25@signal03" value="0" unit="null" title="output at end of stage 8"/>
+			<parameter dataPath="rp26@signal03" value="1e+06" unit="s" title="duration of stage 8"/>
+			<parameter dataPath="nstages@signal03" value="2" unit="None" title="number of stages"/>
+			<parameter dataPath="iscyclic@signal03" value="1" unit="None" title="cyclic"/>
+			<port id="BrakingSystem/signal03/1" type="signal"/>
+		</component>
+		<component name="drophydraulicprops" subModelName="FPDROP" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<parameter dataPath="fpd@drophydraulicprops" value="850" unit="kg/m**3" title="density"/>
+			<parameter dataPath="fpbm@drophydraulicprops" value="17000" unit="bar" title="bulk modulus"/>
+			<parameter dataPath="fpav@drophydraulicprops" value="42.5" unit="cP" title="absolute viscosity"/>
+			<parameter dataPath="fpsp@drophydraulicprops" value="0" unit="bar" title="saturation pressure"/>
+			<parameter dataPath="fpac@drophydraulicprops" value="0.1" unit="%" title="fractional air content"/>
+			<parameter dataPath="fpt@drophydraulicprops" value="39.85" unit="degC" title="temperature"/>
+			<parameter dataPath="fppi@drophydraulicprops" value="1.4" unit="null" title="polytropic index for gas content"/>
+			<parameter dataPath="fpi@drophydraulicprops" value="0" unit="None" title="index of hydraulic fluid"/>
+		</component>
+		<component name="pn_gas_data" subModelName="PNGD001" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<parameter dataPath="cpin@pn_gas_data" value="0" unit="J/kg/K" title="constant-pressure specific heat (Cp)"/>
+			<parameter dataPath="cvin@pn_gas_data" value="0" unit="J/kg/K" title="constant-volume specific heat (Cv)"/>
+			<parameter dataPath="gin@pn_gas_data" value="1.4" unit="null" title="specific heat ratio (gamma)"/>
+			<parameter dataPath="rin@pn_gas_data" value="287" unit="J/kg/K" title="perfect gas constant (r)"/>
+			<parameter dataPath="muin@pn_gas_data" value="0.0182" unit="cP" title="absolute viscosity (mu)"/>
+			<parameter dataPath="lamin@pn_gas_data" value="0.0264" unit="W/m/K" title="thermal conductivity"/>
+			<parameter dataPath="gi@pn_gas_data" value="1" unit="None" title="gas type index"/>
+		</component>
+		<component name="supercomponent_boos01" subModelName="BOOS01" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_boos01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop" value="0" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop" value="1e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop" value="50000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zerospeedsource" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zerospeedsource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop_2" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop_2" value="0" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop_2" value="1e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop_2" value="50000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop_2" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop_2" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop_2" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop_2" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop_2" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop_2" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_2/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop_3" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop_3" value="0.3" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop_3" value="1e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop_3" value="50000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop_3" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop_3" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop_3" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop_3" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop_3" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop_3" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_3/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop_4" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop_4" value="0.8" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop_4" value="7.1e+06" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop_4" value="5000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop_4" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop_4" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop_4" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop_4" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop_4" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop_4" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_4/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_4/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.springdamper01" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@supercomponent_boos01.springdamper01" value="9.5" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@supercomponent_boos01.springdamper01" value="7500" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@supercomponent_boos01.springdamper01" value="0" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@supercomponent_boos01.springdamper01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.springdamper01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.springdamper01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.springdamper01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.springdamper01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector_3" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_3/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_3/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector_4" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_4/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_4/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_4/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.pn_c1" subModelName="PNCH012" subModelInstanceNumber="-1" subModelDirectory="$AME/libpcd/submodels" categoryName="pcd">
+			<parameter dataPath="cvol0@supercomponent_boos01.pn_c1" value="0.1" unit="L" title="dead volume"/>
+			<parameter dataPath="kth@supercomponent_boos01.pn_c1" value="500" unit="J/m**2/K/s" title="thermal exchange coefficient"/>
+			<parameter dataPath="sth@supercomponent_boos01.pn_c1" value="0.1" unit="m**2" title="thermal exchange area"/>
+			<parameter dataPath="extemp@supercomponent_boos01.pn_c1" value="293" unit="K" title="external temperature"/>
+			<parameter dataPath="gi@supercomponent_boos01.pn_c1" value="1" unit="None" title="gas type index"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_c1/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_c1/2" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_c1/3" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_c1/4" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_morifice" subModelName="PNVO002" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<parameter dataPath="area0@supercomponent_boos01.pn_morifice" value="5" unit="mm**2" title="orifice area at maximum opening"/>
+			<parameter dataPath="gi@supercomponent_boos01.pn_morifice" value="1" unit="None" title="gas type index"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice/2" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice/3" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_morifice_2" subModelName="PNVO002" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<parameter dataPath="area0@supercomponent_boos01.pn_morifice_2" value="12.9119" unit="mm**2" title="orifice area at maximum opening"/>
+			<parameter dataPath="gi@supercomponent_boos01.pn_morifice_2" value="1" unit="None" title="gas type index"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice_2/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice_2/2" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_morifice_2/3" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_plug" subModelName="PNPL01" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_plug/1" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.displacementsensor" subModelName="DT000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="offset@supercomponent_boos01.displacementsensor" value="-0.0003" unit="m" title="offset to be subtracted from displacement"/>
+			<parameter dataPath="gain@supercomponent_boos01.displacementsensor" value="1" unit="1/m" title="gain for signal output"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.displacementsensor_2" subModelName="DT000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="offset@supercomponent_boos01.displacementsensor_2" value="0" unit="m" title="offset to be subtracted from displacement"/>
+			<parameter dataPath="gain@supercomponent_boos01.displacementsensor_2" value="1" unit="1/m" title="gain for signal output"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_2/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector_5" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_5/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_5/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_5/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector_6" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_6/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_6/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector_6/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector2_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.springdamper01_2" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@supercomponent_boos01.springdamper01_2" value="200" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@supercomponent_boos01.springdamper01_2" value="4000" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@supercomponent_boos01.springdamper01_2" value="0" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@supercomponent_boos01.springdamper01_2" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.springdamper01_2" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.springdamper01_2" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.springdamper01_2" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.springdamper01_2" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01_2/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zerospeedsource_2" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zerospeedsource_2/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop_5" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop_5" value="0.1" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop_5" value="1e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop_5" value="50000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop_5" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop_5" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop_5" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop_5" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop_5" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop_5" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_5/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_5/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zerospeedsource_3" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zerospeedsource_3/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.displacementsensor_3" subModelName="DT000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="offset@supercomponent_boos01.displacementsensor_3" value="0" unit="m" title="offset to be subtracted from displacement"/>
+			<parameter dataPath="gain@supercomponent_boos01.displacementsensor_3" value="1" unit="1/m" title="gain for signal output"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_3/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.displacementsensor_3/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.springdamper01_3" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@supercomponent_boos01.springdamper01_3" value="1.5" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@supercomponent_boos01.springdamper01_3" value="2000" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@supercomponent_boos01.springdamper01_3" value="0" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@supercomponent_boos01.springdamper01_3" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.springdamper01_3" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.springdamper01_3" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.springdamper01_3" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.springdamper01_3" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.springdamper01_3/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.control03" subModelName="SPLT0" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<port id="BrakingSystem/supercomponent_boos01.control03/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control03/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control03/3" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.control01" subModelName="JUN3M" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<port id="BrakingSystem/supercomponent_boos01.control01/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control01/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control01/3" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.elect01" subModelName="GA00" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<parameter dataPath="k@supercomponent_boos01.elect01" value="2000" unit="null" title="value of gain"/>
+			<port id="BrakingSystem/supercomponent_boos01.elect01/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.elect01/2" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.elect01_2" subModelName="GA00" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<parameter dataPath="k@supercomponent_boos01.elect01_2" value="3333.33" unit="null" title="value of gain"/>
+			<port id="BrakingSystem/supercomponent_boos01.elect01_2/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.elect01_2/2" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.pn_node2" subModelName="PNND005" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_node2/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_node2/2" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_node2_2" subModelName="PNND004" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_node2_2/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_node2_2/2" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.control10" subModelName="SAT0" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<parameter dataPath="rp3@supercomponent_boos01.control10" value="0" unit="null" title="minimum permitted value"/>
+			<parameter dataPath="rp4@supercomponent_boos01.control10" value="1" unit="null" title="maximum permitted value"/>
+			<port id="BrakingSystem/supercomponent_boos01.control10/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control10/2" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.control10_2" subModelName="SAT0" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<parameter dataPath="rp3@supercomponent_boos01.control10_2" value="0" unit="null" title="minimum permitted value"/>
+			<parameter dataPath="rp4@supercomponent_boos01.control10_2" value="1" unit="null" title="maximum permitted value"/>
+			<port id="BrakingSystem/supercomponent_boos01.control10_2/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control10_2/2" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_boos01.bhc1" value="1" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_boos01.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_boos01.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_boos01.elasticendstop_6" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_boos01.elasticendstop_6" value="0" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_boos01.elasticendstop_6" value="1.725e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_boos01.elasticendstop_6" value="10000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_boos01.elasticendstop_6" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_boos01.elasticendstop_6" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_boos01.elasticendstop_6" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_boos01.elasticendstop_6" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_boos01.elasticendstop_6" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_boos01.elasticendstop_6" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_6/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.elasticendstop_6/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.hydraulicplug" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_boos01.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_boos01.hydraulicplug_2" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_boos01.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_boos01.brp2" subModelName="BRP18" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_boos01.brp2" value="25.4" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_boos01.brp2" value="13.72" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_boos01.brp2" value="0" unit="mm" title="chamber length at zero relative displacement"/>
+			<parameter dataPath="indexf@supercomponent_boos01.brp2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2/3" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2/4" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2/5" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.brp2_2" subModelName="BRP18" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_boos01.brp2_2" value="13.72" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_boos01.brp2_2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_boos01.brp2_2" value="0" unit="mm" title="chamber length at zero relative displacement"/>
+			<parameter dataPath="indexf@supercomponent_boos01.brp2_2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2_2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2_2/3" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2_2/4" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.brp2_2/5" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zeroforcesource_2" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zeroforcesource_2/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zeroforcesource_3" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zeroforcesource_3/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.zeroforcesource_4" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.zeroforcesource_4/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.pn_source0" subModelName="PNAS001" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_source0/1" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_bap2" subModelName="PNPA002" subModelInstanceNumber="-1" subModelDirectory="$AME/libpcd/submodels" categoryName="pcd">
+			<parameter dataPath="dp@supercomponent_boos01.pn_bap2" value="250" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_boos01.pn_bap2" value="38" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_boos01.pn_bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="gi@supercomponent_boos01.pn_bap2" value="1" unit="None" title="gas type index"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.pn_bap2_2" subModelName="PNPA001" subModelInstanceNumber="-1" subModelDirectory="$AME/libpcd/submodels" categoryName="pcd">
+			<parameter dataPath="dp@supercomponent_boos01.pn_bap2_2" value="250" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_boos01.pn_bap2_2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_boos01.pn_bap2_2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="gi@supercomponent_boos01.pn_bap2_2" value="1" unit="None" title="gas type index"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2_2/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_bap2_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.control01_2" subModelName="JUN3M" subModelInstanceNumber="-1" subModelDirectory="$AME/libsig/submodels" categoryName="sig">
+			<port id="BrakingSystem/supercomponent_boos01.control01_2/1" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control01_2/2" type="signal"/>
+			<port id="BrakingSystem/supercomponent_boos01.control01_2/3" type="signal"/>
+		</component>
+		<component name="supercomponent_boos01.pn_node3" subModelName="PN3NODE3" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_node3/1" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_node3/2" type="pflow"/>
+			<port id="BrakingSystem/supercomponent_boos01.pn_node3/3" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.pn_source" subModelName="PNCS001" subModelInstanceNumber="-1" subModelDirectory="$AME/libpn/submodels" categoryName="pn">
+			<port id="BrakingSystem/supercomponent_boos01.pn_source/1" type="pflow"/>
+		</component>
+		<component name="supercomponent_boos01.mass_friction2port" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_boos01.mass_friction2port" value="0.15" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_boos01.mass_friction2port" value="10" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_boos01.mass_friction2port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_boos01.mass_friction2port" value="0" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_boos01.mass_friction2port" value="0" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_boos01.mass_friction2port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.mass_friction2port_2" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_boos01.mass_friction2port_2" value="0.15" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_boos01.mass_friction2port_2" value="10" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_boos01.mass_friction2port_2" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_boos01.mass_friction2port_2" value="0" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_boos01.mass_friction2port_2" value="0" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_boos01.mass_friction2port_2" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port_2/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.mass_friction2port_3" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_boos01.mass_friction2port_3" value="0.005" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_boos01.mass_friction2port_3" value="10" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_boos01.mass_friction2port_3" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_boos01.mass_friction2port_3" value="0" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_boos01.mass_friction2port_3" value="0" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_boos01.mass_friction2port_3" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_friction2port_3/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.lconnector2_3" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_3/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.lconnector2_3/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.mass_ext_envelope" subModelName="MAS31" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass1@supercomponent_boos01.mass_ext_envelope" value="0.01" unit="kg" title="mass of piston (m1)"/>
+			<parameter dataPath="fstick@supercomponent_boos01.mass_ext_envelope" value="0" unit="N" title="stiction force (static) between piston and envelope"/>
+			<parameter dataPath="fcoul@supercomponent_boos01.mass_ext_envelope" value="0" unit="N" title="Coulomb friction force (dynamic) between piston and envelope"/>
+			<parameter dataPath="rvisc@supercomponent_boos01.mass_ext_envelope" value="1000" unit="N/(m/s)" title="viscous friction between piston and envelope"/>
+			<parameter dataPath="wind@supercomponent_boos01.mass_ext_envelope" value="0" unit="N/(m/s)**2" title="windage friction between piston and envelope"/>
+			<parameter dataPath="dxel@supercomponent_boos01.mass_ext_envelope" value="1e-06" unit="m" title="stick displacement threshold between piston and envelope"/>
+			<parameter dataPath="krel@supercomponent_boos01.mass_ext_envelope" value="10000" unit="N/mm" title="stick stiffness between piston and envelope"/>
+			<parameter dataPath="zsec@supercomponent_boos01.mass_ext_envelope" value="75" unit="%" title="damping coefficient for reset integrator"/>
+			<parameter dataPath="astrib@supercomponent_boos01.mass_ext_envelope" value="0.001" unit="m/s" title="Stribeck constant between piston and envelope"/>
+			<parameter dataPath="xmin@supercomponent_boos01.mass_ext_envelope" value="-1" unit="m" title="lower displacement limit (piston/envelope)"/>
+			<parameter dataPath="Kbmin@supercomponent_boos01.mass_ext_envelope" value="1e+06" unit="N/mm" title="lower limit stiffness (piston/envelope)"/>
+			<parameter dataPath="Dbmin@supercomponent_boos01.mass_ext_envelope" value="10" unit="N/(mm/s)" title="lower limit contact damping coefficient (piston/envelope)"/>
+			<parameter dataPath="Pdmin@supercomponent_boos01.mass_ext_envelope" value="0.1" unit="mm" title="lower limit penetration for full damping (piston/envelope)"/>
+			<parameter dataPath="xmax@supercomponent_boos01.mass_ext_envelope" value="1" unit="m" title="higher displacement limit (piston/envelope)"/>
+			<parameter dataPath="Kbmax@supercomponent_boos01.mass_ext_envelope" value="1e+06" unit="N/mm" title="higher limit stiffness (piston/envelope)"/>
+			<parameter dataPath="Dbmax@supercomponent_boos01.mass_ext_envelope" value="10" unit="N/(mm/s)" title="higher limit contact damping (piston/envelope)"/>
+			<parameter dataPath="Pdmax@supercomponent_boos01.mass_ext_envelope" value="0.1" unit="mm" title="higher limit penetration for full damping (piston/envelope)"/>
+			<parameter dataPath="theta@supercomponent_boos01.mass_ext_envelope" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<parameter dataPath="strib@supercomponent_boos01.mass_ext_envelope" value="1" unit="None" title="Stribeck effect"/>
+			<parameter dataPath="stickdef@supercomponent_boos01.mass_ext_envelope" value="2" unit="None" title="stiction domain definition"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope/3" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope/4" type="lshaft"/>
+		</component>
+		<component name="supercomponent_boos01.mass_ext_envelope_2" subModelName="MAS31" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass1@supercomponent_boos01.mass_ext_envelope_2" value="0.001" unit="kg" title="mass of piston (m1)"/>
+			<parameter dataPath="fstick@supercomponent_boos01.mass_ext_envelope_2" value="0" unit="N" title="stiction force (static) between piston and envelope"/>
+			<parameter dataPath="fcoul@supercomponent_boos01.mass_ext_envelope_2" value="0" unit="N" title="Coulomb friction force (dynamic) between piston and envelope"/>
+			<parameter dataPath="rvisc@supercomponent_boos01.mass_ext_envelope_2" value="1000" unit="N/(m/s)" title="viscous friction between piston and envelope"/>
+			<parameter dataPath="wind@supercomponent_boos01.mass_ext_envelope_2" value="0" unit="N/(m/s)**2" title="windage friction between piston and envelope"/>
+			<parameter dataPath="dxel@supercomponent_boos01.mass_ext_envelope_2" value="1e-06" unit="m" title="stick displacement threshold between piston and envelope"/>
+			<parameter dataPath="krel@supercomponent_boos01.mass_ext_envelope_2" value="10000" unit="N/mm" title="stick stiffness between piston and envelope"/>
+			<parameter dataPath="zsec@supercomponent_boos01.mass_ext_envelope_2" value="50" unit="%" title="damping coefficient for reset integrator"/>
+			<parameter dataPath="astrib@supercomponent_boos01.mass_ext_envelope_2" value="0.001" unit="m/s" title="Stribeck constant between piston and envelope"/>
+			<parameter dataPath="xmin@supercomponent_boos01.mass_ext_envelope_2" value="-1" unit="m" title="lower displacement limit (piston/envelope)"/>
+			<parameter dataPath="Kbmin@supercomponent_boos01.mass_ext_envelope_2" value="1e+06" unit="N/mm" title="lower limit stiffness (piston/envelope)"/>
+			<parameter dataPath="Dbmin@supercomponent_boos01.mass_ext_envelope_2" value="10" unit="N/(mm/s)" title="lower limit contact damping coefficient (piston/envelope)"/>
+			<parameter dataPath="Pdmin@supercomponent_boos01.mass_ext_envelope_2" value="0.1" unit="mm" title="lower limit penetration for full damping (piston/envelope)"/>
+			<parameter dataPath="xmax@supercomponent_boos01.mass_ext_envelope_2" value="1" unit="m" title="higher displacement limit (piston/envelope)"/>
+			<parameter dataPath="Kbmax@supercomponent_boos01.mass_ext_envelope_2" value="1e+06" unit="N/mm" title="higher limit stiffness (piston/envelope)"/>
+			<parameter dataPath="Dbmax@supercomponent_boos01.mass_ext_envelope_2" value="10" unit="N/(mm/s)" title="higher limit contact damping (piston/envelope)"/>
+			<parameter dataPath="Pdmax@supercomponent_boos01.mass_ext_envelope_2" value="0.1" unit="mm" title="higher limit penetration for full damping (piston/envelope)"/>
+			<parameter dataPath="theta@supercomponent_boos01.mass_ext_envelope_2" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<parameter dataPath="strib@supercomponent_boos01.mass_ext_envelope_2" value="1" unit="None" title="Stribeck effect"/>
+			<parameter dataPath="stickdef@supercomponent_boos01.mass_ext_envelope_2" value="2" unit="None" title="stiction domain definition"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope_2/3" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_boos01.mass_ext_envelope_2/4" type="lshaft"/>
+		</component>
+		<line name="supercomponent_boos01.h2port" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_2" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_3" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_4" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_5" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_6" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_7" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_8" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_9" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_10" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_11" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_12" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_13" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_14" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_15" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_16" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_17" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_18" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_boos01.h2port_19" subModelName="DIRECT" subModelInstanceNumber="-1" subModelDirectory=" "/>
+		<line name="supercomponent_boos01.h2port_20" subModelName="DIRECT" subModelInstanceNumber="-1" subModelDirectory=" "/>
+		<component name="supercomponent_calip1" subModelName="CALIP1" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_calip1/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.spring01" subModelName="SPR000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="srate@supercomponent_calip1.spring01" value="1.07e+07" unit="N/m" title="spring rate"/>
+			<parameter dataPath="F0@supercomponent_calip1.spring01" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="G@supercomponent_calip1.spring01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1.spring01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1.spring01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1.spring01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1.spring01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1.spring01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.spring01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_calip1.elasticendstop" value="0.3" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_calip1.elasticendstop" value="2.3e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_calip1.elasticendstop" value="10000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_calip1.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_calip1.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.zerospeedsource" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1.zerospeedsource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.bap2" subModelName="BAP11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_calip1.bap2" value="50" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_calip1.bap2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_calip1.bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_calip1.bap2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1.bap2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1.bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_calip1.bhc1" value="10" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_calip1.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1.hydraulicplug" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1.hydraulicplug_2" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1.hydrnode2b" subModelName="HN221B" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1.hydrnode2b/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1.hydrnode2b/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1.mass_friction2port" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_calip1.mass_friction2port" value="0.75" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_calip1.mass_friction2port" value="2500" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_calip1.mass_friction2port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_calip1.mass_friction2port" value="350" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_calip1.mass_friction2port" value="350" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_calip1.mass_friction2port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_calip1.mass_friction2port/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1.mass_friction2port/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2" subModelName="CALIP1" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_calip1_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_2.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_2.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.spring01" subModelName="SPR000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="srate@supercomponent_calip1_2.spring01" value="1.07e+07" unit="N/m" title="spring rate"/>
+			<parameter dataPath="F0@supercomponent_calip1_2.spring01" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="G@supercomponent_calip1_2.spring01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_2.spring01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_2.spring01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_2.spring01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_2.spring01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.spring01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.spring01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_calip1_2.elasticendstop" value="0.3" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_calip1_2.elasticendstop" value="2.3e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_calip1_2.elasticendstop" value="10000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_calip1_2.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_calip1_2.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_2.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_2.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_2.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_2.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.zerospeedsource" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_2.zerospeedsource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.bap2" subModelName="BAP11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_calip1_2.bap2" value="32" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_calip1_2.bap2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_calip1_2.bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_calip1_2.bap2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bap2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_2.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_calip1_2.bhc1" value="10" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_calip1_2.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_2.hydraulicplug" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_2.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_2.hydraulicplug_2" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_2.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_2.hydrnode2b" subModelName="HN221B" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_2.hydrnode2b/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.hydrnode2b/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_2.mass_friction2port" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_calip1_2.mass_friction2port" value="0.4" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_calip1_2.mass_friction2port" value="1000" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_calip1_2.mass_friction2port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_calip1_2.mass_friction2port" value="150" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_calip1_2.mass_friction2port" value="150" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_calip1_2.mass_friction2port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.mass_friction2port/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_2.mass_friction2port/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3" subModelName="CALIP1" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_calip1_3/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_3.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_3.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.spring01" subModelName="SPR000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="srate@supercomponent_calip1_3.spring01" value="1.07e+07" unit="N/m" title="spring rate"/>
+			<parameter dataPath="F0@supercomponent_calip1_3.spring01" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="G@supercomponent_calip1_3.spring01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_3.spring01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_3.spring01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_3.spring01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_3.spring01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.spring01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.spring01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_calip1_3.elasticendstop" value="0.3" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_calip1_3.elasticendstop" value="2.3e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_calip1_3.elasticendstop" value="10000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_calip1_3.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_calip1_3.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_3.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_3.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_3.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_3.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.zerospeedsource" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_3.zerospeedsource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.bap2" subModelName="BAP11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_calip1_3.bap2" value="50" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_calip1_3.bap2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_calip1_3.bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_calip1_3.bap2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bap2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_3.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_calip1_3.bhc1" value="10" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_calip1_3.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_3.hydraulicplug" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_3.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_3.hydraulicplug_2" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_3.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_3.hydrnode2b" subModelName="HN221B" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_3.hydrnode2b/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.hydrnode2b/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_3.mass_friction2port" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_calip1_3.mass_friction2port" value="0.75" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_calip1_3.mass_friction2port" value="2500" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_calip1_3.mass_friction2port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_calip1_3.mass_friction2port" value="350" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_calip1_3.mass_friction2port" value="350" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_calip1_3.mass_friction2port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.mass_friction2port/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_3.mass_friction2port/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4" subModelName="CALIP1" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_calip1_4/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_4.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_4.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.spring01" subModelName="SPR000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="srate@supercomponent_calip1_4.spring01" value="1.07e+07" unit="N/m" title="spring rate"/>
+			<parameter dataPath="F0@supercomponent_calip1_4.spring01" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="G@supercomponent_calip1_4.spring01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_4.spring01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_4.spring01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_4.spring01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_4.spring01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.spring01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.spring01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_calip1_4.elasticendstop" value="0.3" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_calip1_4.elasticendstop" value="2.3e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_calip1_4.elasticendstop" value="10000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_calip1_4.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_calip1_4.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_calip1_4.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_calip1_4.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_calip1_4.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_calip1_4.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.zerospeedsource" subModelName="V001" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_calip1_4.zerospeedsource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.bap2" subModelName="BAP11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_calip1_4.bap2" value="32" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_calip1_4.bap2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_calip1_4.bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_calip1_4.bap2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bap2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_calip1_4.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_calip1_4.bhc1" value="10" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_calip1_4.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_4.hydraulicplug" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_4.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_4.hydraulicplug_2" subModelName="BZQV0" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_4.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_4.hydrnode2b" subModelName="HN221B" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_calip1_4.hydrnode2b/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.hydrnode2b/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_calip1_4.mass_friction2port" subModelName="MAS004" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_calip1_4.mass_friction2port" value="0.4" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_calip1_4.mass_friction2port" value="1000" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_calip1_4.mass_friction2port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_calip1_4.mass_friction2port" value="150" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_calip1_4.mass_friction2port" value="150" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@supercomponent_calip1_4.mass_friction2port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.mass_friction2port/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_calip1_4.mass_friction2port/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1" subModelName="MASTER1" subModelInstanceNumber="-1" subModelDirectory="$AME/demo/Solutions/Automotive/Chassis/submodels">
+			<port id="BrakingSystem/supercomponent_master1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1/4" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1/5" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.bhc1" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_master1.bhc1" value="5" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhc1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bhc1_2" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_master1.bhc1_2" value="5" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhc1_2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_2/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_2/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_2/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug_2" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug_2/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bhr1" subModelName="BHO011" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="qchar@supercomponent_master1.bhr1" value="1" unit="L/min" title="characteristic flow rate"/>
+			<parameter dataPath="dpchar@supercomponent_master1.bhr1" value="1" unit="bar" title="corresponding pressure drop"/>
+			<parameter dataPath="ordiam@supercomponent_master1.bhr1" value="1.27" unit="mm" title="equivalent orifice diameter"/>
+			<parameter dataPath="cqmax@supercomponent_master1.bhr1" value="0.78" unit="null" title="maximum flow coefficient"/>
+			<parameter dataPath="rhochar@supercomponent_master1.bhr1" value="850" unit="kg/m**3" title="working density for pressure drop measurement"/>
+			<parameter dataPath="nuchar@supercomponent_master1.bhr1" value="60" unit="cSt" title="working kinematic viscosity for pressure drop measurement"/>
+			<parameter dataPath="lamc@supercomponent_master1.bhr1" value="3000" unit="null" title="critical flow number (laminar -> turbulent)"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhr1" value="0" unit="None" title="index of hydraulic fluid"/>
+			<parameter dataPath="method@supercomponent_master1.bhr1" value="2" unit="None" title="parameter set for pressure drop"/>
+			<parameter dataPath="userfp@supercomponent_master1.bhr1" value="1" unit="None" title="fluid properties for pressure drop measurement"/>
+			<port id="BrakingSystem/supercomponent_master1.bhr1/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhr1/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bhc1_3" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_master1.bhc1_3" value="1.5" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhc1_3" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_3/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_3/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_3/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_3/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydrnode2" subModelName="HN222A" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug_3" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug_3/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bhr1_2" subModelName="BHO011" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="qchar@supercomponent_master1.bhr1_2" value="1" unit="L/min" title="characteristic flow rate"/>
+			<parameter dataPath="dpchar@supercomponent_master1.bhr1_2" value="1" unit="bar" title="corresponding pressure drop"/>
+			<parameter dataPath="ordiam@supercomponent_master1.bhr1_2" value="1.27" unit="mm" title="equivalent orifice diameter"/>
+			<parameter dataPath="cqmax@supercomponent_master1.bhr1_2" value="0.78" unit="null" title="maximum flow coefficient"/>
+			<parameter dataPath="rhochar@supercomponent_master1.bhr1_2" value="850" unit="kg/m**3" title="working density for pressure drop measurement"/>
+			<parameter dataPath="nuchar@supercomponent_master1.bhr1_2" value="60" unit="cSt" title="working kinematic viscosity for pressure drop measurement"/>
+			<parameter dataPath="lamc@supercomponent_master1.bhr1_2" value="3000" unit="null" title="critical flow number (laminar -> turbulent)"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhr1_2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<parameter dataPath="method@supercomponent_master1.bhr1_2" value="2" unit="None" title="parameter set for pressure drop"/>
+			<parameter dataPath="userfp@supercomponent_master1.bhr1_2" value="1" unit="None" title="fluid properties for pressure drop measurement"/>
+			<port id="BrakingSystem/supercomponent_master1.bhr1_2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhr1_2/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydrnode3" subModelName="H3NODE2" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydrnode3/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode3/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode3/3" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bhc1_4" subModelName="BHC11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="vol0@supercomponent_master1.bhc1_4" value="1.5" unit="cm**3" title="dead volume"/>
+			<parameter dataPath="indexf@supercomponent_master1.bhc1_4" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_4/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_4/2" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_4/3" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bhc1_4/4" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug_4" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug_4/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug_5" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug_5/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydraulicplug_6" subModelName="Q000" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydraulicplug_6/1" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydrnode2_2" subModelName="HN222A" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_2/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydrnode2_3" subModelName="HN222A" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_3/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_3/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.hydrnode2_4" subModelName="HN221A" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels" categoryName="hydr">
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_4/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.hydrnode2_4/2" type="hflow"/>
+		</component>
+		<component name="supercomponent_master1.bap2" subModelName="BAP12" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_master1.bap2" value="22.2" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_master1.bap2" value="3.25" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_master1.bap2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_master1.bap2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.elasticendstop" subModelName="LSTP00A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="gap0@supercomponent_master1.elasticendstop" value="18" unit="mm" title="gap or clearance with both displacements zero"/>
+			<parameter dataPath="kcont@supercomponent_master1.elasticendstop" value="1e+07" unit="N/m" title="contact stiffness"/>
+			<parameter dataPath="rcont@supercomponent_master1.elasticendstop" value="100000" unit="N/(m/s)" title="contact damping"/>
+			<parameter dataPath="Pdis@supercomponent_master1.elasticendstop" value="0.01" unit="mm" title="penetration for full damping"/>
+			<parameter dataPath="G@supercomponent_master1.elasticendstop" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_master1.elasticendstop" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_master1.elasticendstop" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_master1.elasticendstop" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_master1.elasticendstop" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_master1.elasticendstop/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.elasticendstop/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.springdamper01" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@supercomponent_master1.springdamper01" value="55" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@supercomponent_master1.springdamper01" value="7880" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@supercomponent_master1.springdamper01" value="10" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@supercomponent_master1.springdamper01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_master1.springdamper01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_master1.springdamper01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@supercomponent_master1.springdamper01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_master1.springdamper01" value="10" unit="None" title="number of active coils"/>
+			<port id="BrakingSystem/supercomponent_master1.springdamper01/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.springdamper01/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.zeroforcesource" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_master1.zeroforcesource/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.lconnector" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_master1.lconnector/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.bap2_2" subModelName="BAP11" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_master1.bap2_2" value="22.2" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_master1.bap2_2" value="0" unit="mm" title="rod diameter"/>
+			<parameter dataPath="x0@supercomponent_master1.bap2_2" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_master1.bap2_2" value="0" unit="None" title="index of hydraulic fluid"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2_2/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.bap2_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.bap3" subModelName="BAP016" subModelInstanceNumber="-1" subModelDirectory="$AME/libhcd/submodels" categoryName="belh">
+			<parameter dataPath="dp@supercomponent_master1.bap3" value="22.2" unit="mm" title="piston diameter"/>
+			<parameter dataPath="dr@supercomponent_master1.bap3" value="3.25" unit="mm" title="rod diameter"/>
+			<parameter dataPath="k@supercomponent_master1.bap3" value="3.8" unit="N/mm" title="spring stiffness"/>
+			<parameter dataPath="f0@supercomponent_master1.bap3" value="97" unit="N" title="spring force at zero compression"/>
+			<parameter dataPath="x0@supercomponent_master1.bap3" value="0" unit="mm" title="chamber length at zero displacement"/>
+			<parameter dataPath="G@supercomponent_master1.bap3" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@supercomponent_master1.bap3" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@supercomponent_master1.bap3" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="xs0@supercomponent_master1.bap3" value="0" unit="mm" title="spring compression at zero displacement"/>
+			<parameter dataPath="indexf@supercomponent_master1.bap3" value="0" unit="None" title="index of hydraulic fluid"/>
+			<parameter dataPath="stiffmode@supercomponent_master1.bap3" value="1" unit="None" title="stiffness mode"/>
+			<parameter dataPath="ncoils@supercomponent_master1.bap3" value="10" unit="None" title="number of active coils"/>
+			<parameter dataPath="disc@supercomponent_master1.bap3" value="2" unit="None" title="discontinuity handling"/>
+			<parameter dataPath="springtable@supercomponent_master1.bap3" value="1*x" unit="None" title="filename or expression for F[N]=f(x[m])"/>
+			<port id="BrakingSystem/supercomponent_master1.bap3/1" type="hflow"/>
+			<port id="BrakingSystem/supercomponent_master1.bap3/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.bap3/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.zeroforcesource_2" subModelName="F000" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_master1.zeroforcesource_2/1" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.lconnector_2" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_master1.lconnector_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector_2/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector_2/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.lconnector_3" subModelName="LCON13" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="BrakingSystem/supercomponent_master1.lconnector_3/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector_3/2" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.lconnector_3/3" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.mass_friction_endstops" subModelName="MAS005" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_master1.mass_friction_endstops" value="0.3" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_master1.mass_friction_endstops" value="1000" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_master1.mass_friction_endstops" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_master1.mass_friction_endstops" value="2" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_master1.mass_friction_endstops" value="2" unit="N" title="stiction force"/>
+			<parameter dataPath="xmin@supercomponent_master1.mass_friction_endstops" value="0" unit="m" title="lower displacement limit"/>
+			<parameter dataPath="xmax@supercomponent_master1.mass_friction_endstops" value="1" unit="m" title="higher displacement limit"/>
+			<parameter dataPath="angle@supercomponent_master1.mass_friction_endstops" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_master1.mass_friction_endstops/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.mass_friction_endstops/2" type="lshaft"/>
+		</component>
+		<component name="supercomponent_master1.mass_friction_endstops_2" subModelName="MAS005" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@supercomponent_master1.mass_friction_endstops_2" value="0.2" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@supercomponent_master1.mass_friction_endstops_2" value="1000" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@supercomponent_master1.mass_friction_endstops_2" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@supercomponent_master1.mass_friction_endstops_2" value="2" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@supercomponent_master1.mass_friction_endstops_2" value="2" unit="N" title="stiction force"/>
+			<parameter dataPath="xmin@supercomponent_master1.mass_friction_endstops_2" value="0" unit="m" title="lower displacement limit"/>
+			<parameter dataPath="xmax@supercomponent_master1.mass_friction_endstops_2" value="0.018" unit="m" title="higher displacement limit"/>
+			<parameter dataPath="angle@supercomponent_master1.mass_friction_endstops_2" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="BrakingSystem/supercomponent_master1.mass_friction_endstops_2/1" type="lshaft"/>
+			<port id="BrakingSystem/supercomponent_master1.mass_friction_endstops_2/2" type="lshaft"/>
+		</component>
+		<line name="supercomponent_master1.h2port" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_2" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_3" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_4" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_5" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_6" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_7" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_8" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_9" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="supercomponent_master1.h2port_10" subModelName="DIRECT" subModelInstanceNumber="-1"/>
+		<line name="h2port" subModelName="HL002" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels"/>
+		<line name="h2port_2" subModelName="HL002" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels"/>
+		<line name="h2port_3" subModelName="HL002" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels"/>
+		<line name="h2port_4" subModelName="HL002" subModelInstanceNumber="-1" subModelDirectory="$AME/libhydr/submodels"/>
+	</circuit>
+	<circuit name="FlatTwin">
+		<globalParameter uniqueName="R" unit="mm" title="radius of crank"/>
+		<globalParameter uniqueName="MASS" value="100" unit="kg" title="mass"/>
+		<globalParameter uniqueName="L" unit="mm" title="length of connecting rod"/>
+		<component name="mass_friction1port" subModelName="MAS003" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@mass_friction1port" value="MASS" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@mass_friction1port" value="5" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@mass_friction1port" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@mass_friction1port" value="0" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@mass_friction1port" value="0" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@mass_friction1port" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="FlatTwin/mass_friction1port/1" type="lshaft"/>
+		</component>
+		<component name="springdamper01" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@springdamper01" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@springdamper01" value="100000" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@springdamper01" value="4000" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@springdamper01" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@springdamper01" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@springdamper01" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@springdamper01" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@springdamper01" value="10" unit="None" title="number of active coils"/>
+			<port id="FlatTwin/springdamper01/1" type="lshaft"/>
+			<port id="FlatTwin/springdamper01/2" type="lshaft"/>
+		</component>
+		<component name="simple_crank" subModelName="CRANK0" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="rad@simple_crank" value="R" unit="mm" title="radius of crank"/>
+			<parameter dataPath="length@simple_crank" value="L" unit="mm" title="length of connecting rod"/>
+			<parameter dataPath="offset@simple_crank" value="0" unit="mm" title="offset for displacement"/>
+			<port id="FlatTwin/simple_crank/1" type="rshaft"/>
+			<port id="FlatTwin/simple_crank/2" type="lshaft"/>
+		</component>
+		<component name="rconnector" subModelName="RCON00" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<port id="FlatTwin/rconnector/1" type="rshaft"/>
+			<port id="FlatTwin/rconnector/2" type="rshaft"/>
+			<port id="FlatTwin/rconnector/3" type="rshaft"/>
+		</component>
+		<component name="simple_crank_2" subModelName="CRANK0" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="rad@simple_crank_2" value="R" unit="mm" title="radius of crank"/>
+			<parameter dataPath="length@simple_crank_2" value="L" unit="mm" title="length of connecting rod"/>
+			<parameter dataPath="offset@simple_crank_2" value="0" unit="mm" title="offset for displacement"/>
+			<port id="FlatTwin/simple_crank_2/1" type="rshaft"/>
+			<port id="FlatTwin/simple_crank_2/2" type="lshaft"/>
+		</component>
+		<component name="springdamper01_2" subModelName="SD0000A" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="force0@springdamper01_2" value="0" unit="N" title="spring force with both displacements zero"/>
+			<parameter dataPath="srate@springdamper01_2" value="100000" unit="N/m" title="spring rate"/>
+			<parameter dataPath="cdamp@springdamper01_2" value="1000" unit="N/(m/s)" title="damper rating"/>
+			<parameter dataPath="G@springdamper01_2" value="8.57e+10" unit="N/m**2" title="material shear modulus"/>
+			<parameter dataPath="sdiam@springdamper01_2" value="20" unit="mm" title="spring diameter"/>
+			<parameter dataPath="wdiam@springdamper01_2" value="2" unit="mm" title="wire diameter"/>
+			<parameter dataPath="stiffmode@springdamper01_2" value="1" unit="None" title="spring stiffness mode"/>
+			<parameter dataPath="ncoils@springdamper01_2" value="10" unit="None" title="number of active coils"/>
+			<port id="FlatTwin/springdamper01_2/1" type="lshaft"/>
+			<port id="FlatTwin/springdamper01_2/2" type="lshaft"/>
+		</component>
+		<component name="rload01" subModelName="RL00" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="J@rload01" value="10" unit="kgm**2" title="moment of inertia"/>
+			<parameter dataPath="vis@rload01" value="1" unit="Nm/(rev/min)" title="coefficient of viscous friction"/>
+			<parameter dataPath="coul@rload01" value="0" unit="Nm" title="Coulomb friction torque"/>
+			<parameter dataPath="stict@rload01" value="0" unit="Nm" title="stiction torque"/>
+			<port id="FlatTwin/rload01/1" type="rshaft"/>
+		</component>
+		<component name="mass_friction1port_2" subModelName="MAS003" subModelInstanceNumber="-1" subModelDirectory="$AME/libmec/submodels" categoryName="meca">
+			<parameter dataPath="mass@mass_friction1port_2" value="MASS" unit="kg" title="mass"/>
+			<parameter dataPath="coefv@mass_friction1port_2" value="0" unit="N/(m/s)" title="coefficient of viscous friction"/>
+			<parameter dataPath="wind@mass_friction1port_2" value="0" unit="N/(m/s)**2" title="coefficient of windage"/>
+			<parameter dataPath="coul@mass_friction1port_2" value="0" unit="N" title="Coulomb friction force"/>
+			<parameter dataPath="stict@mass_friction1port_2" value="0" unit="N" title="stiction force"/>
+			<parameter dataPath="angle@mass_friction1port_2" value="0" unit="degree" title="inclination (+90 port 1 lowest, -90 port 1 highest)"/>
+			<port id="FlatTwin/mass_friction1port_2/1" type="lshaft"/>
+		</component>
+	</circuit>
+</lms.amesim:WorkingDirectory>
