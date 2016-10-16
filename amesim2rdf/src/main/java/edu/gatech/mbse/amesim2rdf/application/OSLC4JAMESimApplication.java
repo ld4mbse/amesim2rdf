@@ -153,8 +153,7 @@ public class OSLC4JAMESimApplication {
 				
 				String amesimModelsDirectoryFromUser = prop
 						.getProperty("amesimModelsDirectory");
-				String pythonScriptsDirectoryFromUser = prop
-						.getProperty("pythonScriptsDirectory");
+				
 				
 				
 
