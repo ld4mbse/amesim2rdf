@@ -12,7 +12,9 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,6 +64,8 @@ public class AMESimManager {
 	static String amesimDirectory = OSLC4JAMESimApplication.amesimModelPaths; // "C:/Users/Axel/git/oslc4jamesim/oslc4jamesim/AMESim";
 
 	static int sessionID = 1;
+	
+	static boolean loadedFromJar = false; 
 
 	// public static Collection<Model> amesimModels = new ArrayList<Model>();
 	// public static Collection<Block> amesimComponents = new
@@ -92,10 +96,8 @@ public class AMESimManager {
 
 	static StringBuffer buffer;
 
-	public static String baseHTTPURI = "http://"
-			+ OSLC4JAMESimApplication.hostName + ":"
-			+ OSLC4JAMESimApplication.portNumber + "/"
-			+ OSLC4JAMESimApplication.contextPath;
+	public static String baseHTTPURI = "http://" + OSLC4JAMESimApplication.hostName + ":"
+			+ OSLC4JAMESimApplication.portNumber + "/" + OSLC4JAMESimApplication.contextPath;
 	static String projectId;
 
 	public static void main(String[] args) {
@@ -137,53 +139,60 @@ public class AMESimManager {
 				}
 				long endTime = System.currentTimeMillis();
 				long duration = endTime - startTime;
-//				System.out.println("Reading AMESim files in "
-//						+ (duration / 1000) + " seconds");
+				// System.out.println("Reading AMESim files in "
+				// + (duration / 1000) + " seconds");
 
 				try {
+					// get file path of folder containing xmi file
+					Path pathToCurrentDirectory = Paths.get("").toAbsolutePath();
+
 					// load AMESim XMI file
-					Resource ecoreResource = loadEcoreModel(org.eclipse.emf.common.util.URI
-							.createFileURI(new File("python/amesimWorkDir.xmi")
-									.getAbsolutePath()));
+					// Resource ecoreResource =
+					// loadEcoreModel(org.eclipse.emf.common.util.URI
+					// .createFileURI(new File("python/amesimWorkDir.xmi")
+					// .getAbsolutePath()));
+
+					// xmi either located in python folder or in folder of jar
+					Resource ecoreResource;
+					
+					URL classURL = AMESimManager.class.getResource("AMESimManager.class");
+					if (classURL.toString().startsWith("jar")) {
+						loadedFromJar = true;
+					}
+					if (!loadedFromJar) {
+						ecoreResource = loadEcoreModel(org.eclipse.emf.common.util.URI
+								.createFileURI(new File("python/amesimWorkDir.xmi").getAbsolutePath()));
+					} else {
+						ecoreResource = loadEcoreModel(org.eclipse.emf.common.util.URI.createFileURI(
+								new File(pathToCurrentDirectory + "\\amesimWorkDir.xmi").getAbsolutePath()));
+					}
 
 					// load AMESim working directory
-					amesimWorkingDirectory = (WorkingDirectory) EcoreUtil
-							.getObjectByType(ecoreResource.getContents(),
-									AmesimPackage.eINSTANCE
-											.getWorkingDirectory());
+					amesimWorkingDirectory = (WorkingDirectory) EcoreUtil.getObjectByType(ecoreResource.getContents(),
+							AmesimPackage.eINSTANCE.getWorkingDirectory());
 
 					System.out.println(amesimWorkingDirectory.getCircuit());
-					EList<Circuit> circuits = AMESimManager.amesimWorkingDirectory
-							.getCircuit();
+					EList<Circuit> circuits = AMESimManager.amesimWorkingDirectory.getCircuit();
 					for (Circuit circuit : circuits) {
 						// create OSLC AMESim circuit
 						projectId = circuit.getName();
 						try {
-							AMESimCircuit amesimCircuit = new AMESimCircuit(
-									java.net.URI.create(baseHTTPURI
-											+ "/services/" + projectId
-											+ "/circuit/"
-											+ getQualifiedName(circuit, null)));
+							AMESimCircuit amesimCircuit = new AMESimCircuit(java.net.URI.create(baseHTTPURI
+									+ "/services/" + projectId + "/circuit/" + getQualifiedName(circuit, null)));
 							amesimCircuit.setName(circuit.getName());
-							qNameOslcAMESimCircuitMap.put(
-									getQualifiedName(circuit, null),
-									amesimCircuit);
+							qNameOslcAMESimCircuitMap.put(getQualifiedName(circuit, null), amesimCircuit);
 							oslcAMESimCircuits.add(amesimCircuit);
 
 							// map circuit global parameters
-							Link[] globalParameterLinks = getLinkedEReferences(circuit
-									.getGlobalParameter());
-							amesimCircuit
-									.setGlobalParameters(globalParameterLinks);
+							Link[] globalParameterLinks = getLinkedEReferences(circuit.getGlobalParameter());
+							amesimCircuit.setGlobalParameters(globalParameterLinks);
 
 							// map circuit components (but not all nested
 							// components)
-							EList<Component> components = circuit
-									.getComponent();
+							EList<Component> components = circuit.getComponent();
 							Collection<Component> circuitComponents = new ArrayList();
 							for (Component circuitComponent : components) {
-								String circuitComponentName = getQualifiedName(
-										circuitComponent, new StringBuffer());
+								String circuitComponentName = getQualifiedName(circuitComponent, new StringBuffer());
 								if (!circuitComponentName.contains(".")) {
 									circuitComponents.add(circuitComponent);
 								}
@@ -195,8 +204,7 @@ public class AMESimManager {
 							EList<Line> lines = circuit.getLine();
 							Collection<Line> circuitLines = new ArrayList();
 							for (Line circuitLine : lines) {
-								String circuitLineName = getQualifiedName(
-										circuitLine, new StringBuffer());
+								String circuitLineName = getQualifiedName(circuitLine, new StringBuffer());
 								if (!circuitLineName.contains(".")) {
 									circuitLines.add(circuitLine);
 								}
@@ -209,40 +217,24 @@ public class AMESimManager {
 							e.printStackTrace();
 						}
 
-						EList<GlobalParameter> globalParameters = circuit
-								.getGlobalParameter();
+						EList<GlobalParameter> globalParameters = circuit.getGlobalParameter();
 						for (GlobalParameter globalParameter : globalParameters) {
 							// create OSLC AMESim global parameter
 							try {
 
 								AMESimGlobalParameter amesimGlobalParameter = new AMESimGlobalParameter(
-										java.net.URI.create(baseHTTPURI
-												+ "/services/"
-												+ circuit.getName()
-												+ "/globalparameters/"
-												+ getQualifiedName(
-														globalParameter, null)));
-								amesimGlobalParameter
-										.setUniqueName(globalParameter
-												.getUniqueName());
+										java.net.URI.create(baseHTTPURI + "/services/" + circuit.getName()
+												+ "/globalparameters/" + getQualifiedName(globalParameter, null)));
+								amesimGlobalParameter.setUniqueName(globalParameter.getUniqueName());
 
-								amesimGlobalParameter.setTitle(globalParameter
-										.getTitle());
+								amesimGlobalParameter.setTitle(globalParameter.getTitle());
 								if (globalParameter.getValue() != null) {
-									amesimGlobalParameter
-											.setValue(globalParameter
-													.getValue());
+									amesimGlobalParameter.setValue(globalParameter.getValue());
 								}
-								amesimGlobalParameter.setUnit(globalParameter
-										.getUnit());
-								qNameOslcAMESimGlobalParameterMap.put(
-										circuit.getName()
-												+ "/globalparameters/"
-												+ getQualifiedName(
-														globalParameter, null),
-										amesimGlobalParameter);
-								oslcAMESimGlobalParameters
-										.add(amesimGlobalParameter);
+								amesimGlobalParameter.setUnit(globalParameter.getUnit());
+								qNameOslcAMESimGlobalParameterMap.put(circuit.getName() + "/globalparameters/"
+										+ getQualifiedName(globalParameter, null), amesimGlobalParameter);
+								oslcAMESimGlobalParameters.add(amesimGlobalParameter);
 							} catch (URISyntaxException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -255,42 +247,28 @@ public class AMESimManager {
 							// create OSLC AMESim component
 							try {
 								AMESimComponent amesimComponent = new AMESimComponent(
-										java.net.URI.create(baseHTTPURI
-												+ "/services/"
-												+ circuit.getName()
-												+ "/components/"
-												+ getQualifiedName(component,
-														null)));
+										java.net.URI.create(baseHTTPURI + "/services/" + circuit.getName()
+												+ "/components/" + getQualifiedName(component, null)));
 								String blockQName = component.getName();
-								String blockName = blockQName.split("/")[blockQName
-										.split("/").length - 1];
+								String blockName = blockQName.split("/")[blockQName.split("/").length - 1];
 								amesimComponent.setName(blockName);
 								qNameOslcAMESimComponentMap.put(
-										circuit.getName()
-												+ "/components/"
-												+ getQualifiedName(component,
-														null), amesimComponent);
+										circuit.getName() + "/components/" + getQualifiedName(component, null),
+										amesimComponent);
 								oslcAMESimComponents.add(amesimComponent);
 
 								// component attributes
-								amesimComponent.setSubModelName(component
-										.getSubModelName());
-								amesimComponent
-										.setSubModelInstanceNumber(component
-												.getSubModelInstanceNumber());
-								amesimComponent.setSubModelDirectory(component
-										.getSubModelDirectory());
-								amesimComponent.setCategoryName(component
-										.getCategoryName());
+								amesimComponent.setSubModelName(component.getSubModelName());
+								amesimComponent.setSubModelInstanceNumber(component.getSubModelInstanceNumber());
+								amesimComponent.setSubModelDirectory(component.getSubModelDirectory());
+								amesimComponent.setCategoryName(component.getCategoryName());
 
 								// component parameters
-								Link[] parameters = getLinkedEReferences(component
-										.getParameter());
+								Link[] parameters = getLinkedEReferences(component.getParameter());
 								amesimComponent.setParameters(parameters);
 
 								// component ports
-								Link[] portLinks = getLinkedEReferences(component
-										.getPort());
+								Link[] portLinks = getLinkedEReferences(component.getPort());
 								amesimComponent.setPorts(portLinks);
 
 								// nested components and lines
@@ -300,38 +278,30 @@ public class AMESimManager {
 								// nested components
 								Collection<Component> nestedComponents = new ArrayList<Component>();
 								for (Component circuitComponent : components) {
-									if (circuitComponent.getName().startsWith(
-											component.getName() + ".")) {
+									if (circuitComponent.getName().startsWith(component.getName() + ".")) {
 										// test that component does not belong
 										// to
 										// other nested level
-										String circuitComponentName = circuitComponent
-												.getName().replace(
-														component.getName()
-																+ ".", "");
+										String circuitComponentName = circuitComponent.getName()
+												.replace(component.getName() + ".", "");
 										if (!circuitComponentName.contains(".")) {
 											// nested component found
-											nestedComponents
-													.add(circuitComponent);
+											nestedComponents.add(circuitComponent);
 										}
 									}
 								}
 								if (nestedComponents.size() > 0) {
 									Link[] nestedComponentsLinks = getLinkedEReferences(nestedComponents);
-									amesimComponent
-											.setNestedComponents(nestedComponentsLinks);
+									amesimComponent.setNestedComponents(nestedComponentsLinks);
 								}
 								Collection<Line> nestedLines = new ArrayList<Line>();
 								for (Line circuitLine : lines) {
-									if (circuitLine.getName().startsWith(
-											component.getName() + ".")) {
+									if (circuitLine.getName().startsWith(component.getName() + ".")) {
 										// test that line does not belong to
 										// other
 										// nested level
-										String circuitLineName = circuitLine
-												.getName().replace(
-														component.getName()
-																+ ".", "");
+										String circuitLineName = circuitLine.getName()
+												.replace(component.getName() + ".", "");
 										if (!circuitLineName.contains(".")) {
 											// nested line found
 											nestedLines.add(circuitLine);
@@ -340,8 +310,7 @@ public class AMESimManager {
 								}
 								if (nestedLines.size() > 0) {
 									Link[] nestedLinesLinks = getLinkedEReferences(nestedLines);
-									amesimComponent
-											.setNestedLines(nestedLinesLinks);
+									amesimComponent.setNestedLines(nestedLinesLinks);
 								}
 
 							} catch (URISyntaxException e) {
@@ -349,34 +318,21 @@ public class AMESimManager {
 								e.printStackTrace();
 							}
 
-							EList<Parameter> componentParameters = component
-									.getParameter();
+							EList<Parameter> componentParameters = component.getParameter();
 							for (Parameter parameter : componentParameters) {
-								System.out.println("\t\tPARAMETER "
-										+ parameter.getTitle());
+								System.out.println("\t\tPARAMETER " + parameter.getTitle());
 
 								// create OSLC AMESim component parameter
 								try {
 									AMESimParameter amesimParameter = new AMESimParameter(
-											java.net.URI.create(baseHTTPURI
-													+ "/services/"
-													+ circuit.getName()
-													+ "/parameters/"
-													+ getQualifiedName(
-															parameter, null)));
-									amesimParameter.setTitle(parameter
-											.getTitle());
-									amesimParameter.setValue(parameter
-											.getValue());
-									amesimParameter.setDataPath(parameter
-											.getDataPath());
-									amesimParameter
-											.setUnit(parameter.getUnit());
+											java.net.URI.create(baseHTTPURI + "/services/" + circuit.getName()
+													+ "/parameters/" + getQualifiedName(parameter, null)));
+									amesimParameter.setTitle(parameter.getTitle());
+									amesimParameter.setValue(parameter.getValue());
+									amesimParameter.setDataPath(parameter.getDataPath());
+									amesimParameter.setUnit(parameter.getUnit());
 									qNameOslcAMESimParameterMap.put(
-											circuit.getName()
-													+ "/parameters/"
-													+ getQualifiedName(
-															parameter, null),
+											circuit.getName() + "/parameters/" + getQualifiedName(parameter, null),
 											amesimParameter);
 									oslcAMESimParameters.add(amesimParameter);
 								} catch (URISyntaxException e) {
@@ -392,19 +348,12 @@ public class AMESimManager {
 								// create OSLC AMESim port
 								try {
 									AMESimPort amesimPort = new AMESimPort(
-											java.net.URI.create(baseHTTPURI
-													+ "/services/"
-													+ circuit.getName()
-													+ "/ports/"
-													+ getQualifiedName(port,
-															null)));
+											java.net.URI.create(baseHTTPURI + "/services/" + circuit.getName()
+													+ "/ports/" + getQualifiedName(port, null)));
 									amesimPort.setId(port.getId());
 									amesimPort.setType(port.getType());
 									qNameOslcAMESimPortMap.put(
-											circuit.getName()
-													+ "/ports/"
-													+ getQualifiedName(port,
-															null), amesimPort);
+											circuit.getName() + "/ports/" + getQualifiedName(port, null), amesimPort);
 									oslcAMESimPorts.add(amesimPort);
 								} catch (URISyntaxException e) {
 									// TODO Auto-generated catch block
@@ -417,28 +366,19 @@ public class AMESimManager {
 						for (Line line : lines) {
 							// create OSLC AMESim component
 							try {
-								AMESimLine amesimLine = new AMESimLine(
-										java.net.URI.create(baseHTTPURI
-												+ "/services/"
-												+ circuit.getName() + "/lines/"
-												+ getQualifiedName(line, null)));
+								AMESimLine amesimLine = new AMESimLine(java.net.URI.create(baseHTTPURI + "/services/"
+										+ circuit.getName() + "/lines/" + getQualifiedName(line, null)));
 								String blockQName = line.getName();
-								String blockName = blockQName.split("/")[blockQName
-										.split("/").length - 1];
+								String blockName = blockQName.split("/")[blockQName.split("/").length - 1];
 								amesimLine.setName(blockName);
-								qNameOslcAMESimLineMap.put(
-										circuit.getName() + "/lines/"
-												+ getQualifiedName(line, null),
+								qNameOslcAMESimLineMap.put(circuit.getName() + "/lines/" + getQualifiedName(line, null),
 										amesimLine);
 								oslcAMESimLines.add(amesimLine);
 
 								// line attributes
-								amesimLine.setSubModelName(line
-										.getSubModelName());
-								amesimLine.setSubModelInstanceNumber(line
-										.getSubModelInstanceNumber());
-								amesimLine.setSubModelDirectory(line
-										.getSubModelDirectory());
+								amesimLine.setSubModelName(line.getSubModelName());
+								amesimLine.setSubModelInstanceNumber(line.getSubModelInstanceNumber());
+								amesimLine.setSubModelDirectory(line.getSubModelDirectory());
 							} catch (URISyntaxException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -455,27 +395,35 @@ public class AMESimManager {
 		thread.start();
 		try {
 			thread.join();
-			System.out.println("Data read from "
-					+ OSLC4JAMESimApplication.amesimModelPaths
-					+ " and converted into OSLC resources at "
-					+ new Date().toString());
+			System.out.println("Data read from " + OSLC4JAMESimApplication.amesimModelPaths
+					+ " and converted into RDF at " + new Date().toString());
+
+			// delete temp AMESim XMI file
+			Path pathToCurrentDirectory = Paths.get("").toAbsolutePath();
+			if (!loadedFromJar) {
+				new File(pathToCurrentDirectory +
+						 "\\python\\amesimWorkDir.xmi").delete();
+			} else {
+				new File(pathToCurrentDirectory +
+						 "\\amesimWorkDir.xmi").delete();
+			}
+			 
+			 
+			 
+
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private static Resource loadEcoreModel(
-			org.eclipse.emf.common.util.URI fileURI) {
+	private static Resource loadEcoreModel(org.eclipse.emf.common.util.URI fileURI) {
 		// Create a resource set.
 		ResourceSet resourceSet = new ResourceSetImpl();
 
 		// Register the default resource factory -- only needed for stand-alone!
-		resourceSet
-				.getResourceFactoryRegistry()
-				.getExtensionToFactoryMap()
-				.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-						new XMIResourceFactoryImpl());
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+				.put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
 		// Register the package -- only needed for stand-alone!
 		AmesimPackage amesimEPackage = AmesimPackage.eINSTANCE;
@@ -515,8 +463,7 @@ public class AMESimManager {
 		ArrayList<AMESimComponent> elements = new ArrayList<AMESimComponent>();
 		for (AMESimComponent aMESimComponent : oslcAMESimComponents) {
 			String componentURI = aMESimComponent.getAbout().toString();
-			if (componentURI.startsWith(baseHTTPURI + "/services/" + modelName
-					+ "/components/")) {
+			if (componentURI.startsWith(baseHTTPURI + "/services/" + modelName + "/components/")) {
 				elements.add(aMESimComponent);
 			}
 		}
@@ -527,8 +474,7 @@ public class AMESimManager {
 		ArrayList<AMESimLine> elements = new ArrayList<AMESimLine>();
 		for (AMESimLine aMESimElement : oslcAMESimLines) {
 			String elementURI = aMESimElement.getAbout().toString();
-			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName
-					+ "/lines/")) {
+			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName + "/lines/")) {
 				elements.add(aMESimElement);
 			}
 		}
@@ -539,8 +485,7 @@ public class AMESimManager {
 		ArrayList<AMESimPort> elements = new ArrayList<AMESimPort>();
 		for (AMESimPort aMESimElement : oslcAMESimPorts) {
 			String elementURI = aMESimElement.getAbout().toString();
-			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName
-					+ "/ports/")) {
+			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName + "/ports/")) {
 				elements.add(aMESimElement);
 			}
 		}
@@ -551,29 +496,25 @@ public class AMESimManager {
 		ArrayList<AMESimParameter> elements = new ArrayList<AMESimParameter>();
 		for (AMESimParameter aMESimElement : oslcAMESimParameters) {
 			String elementURI = aMESimElement.getAbout().toString();
-			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName
-					+ "/parameters/")) {
+			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName + "/parameters/")) {
 				elements.add(aMESimElement);
 			}
 		}
 		return elements;
 	}
 
-	public static List<AMESimGlobalParameter> getGlobalParametersInModel(
-			String modelName) {
+	public static List<AMESimGlobalParameter> getGlobalParametersInModel(String modelName) {
 		ArrayList<AMESimGlobalParameter> elements = new ArrayList<AMESimGlobalParameter>();
 		for (AMESimGlobalParameter aMESimElement : oslcAMESimGlobalParameters) {
 			String elementURI = aMESimElement.getAbout().toString();
-			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName
-					+ "/globalparameters/")) {
+			if (elementURI.startsWith(baseHTTPURI + "/services/" + modelName + "/globalparameters/")) {
 				elements.add(aMESimElement);
 			}
 		}
 		return elements;
 	}
 
-	public static void createAMESimComponent(AMESimComponent amesimComponent,
-			String modelName) {
+	public static void createAMESimComponent(AMESimComponent amesimComponent, String modelName) {
 		String amesimDirectory = AMESimManager.amesimDirectory;
 		String amesimComponentIconName = amesimComponent.getIconName();
 		String amesimComponentAlias = amesimComponent.getName();
@@ -584,16 +525,12 @@ public class AMESimManager {
 
 		Process setParamProcess;
 		try {
-			String command = "AMEPython createAMESimComponent.py "
-					+ amesimDirectory + " " + modelName + ".ame" + " "
-					+ amesimComponentIconName + " " + amesimComponentAlias
-					+ " " + amesimXCoordinate + " " + amesimYCoordinate + " "
-					+ amesimSubModelName;
-			setParamProcess = Runtime.getRuntime().exec(command, null,
-					new File("python"));
+			String command = "AMEPython createAMESimComponent.py " + amesimDirectory + " " + modelName + ".ame" + " "
+					+ amesimComponentIconName + " " + amesimComponentAlias + " " + amesimXCoordinate + " "
+					+ amesimYCoordinate + " " + amesimSubModelName;
+			setParamProcess = Runtime.getRuntime().exec(command, null, new File("python"));
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					setParamProcess.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(setParamProcess.getInputStream()));
 			while (br.ready())
 				System.out.println(br.readLine());
 
@@ -604,11 +541,10 @@ public class AMESimManager {
 
 	}
 
-	public static void updateAMESimParameter(AMESimParameter amesimParameter,
-			String modelName) {
+	public static void updateAMESimParameter(AMESimParameter amesimParameter, String modelName) {
 		URI amesimParameterURI = amesimParameter.getAbout();
-		String amesimParameterDataPath = amesimParameterURI.toString().replace(
-				baseHTTPURI + "/services/" + modelName + "/parameters/", "");
+		String amesimParameterDataPath = amesimParameterURI.toString()
+				.replace(baseHTTPURI + "/services/" + modelName + "/parameters/", "");
 		amesimParameterDataPath = amesimParameterDataPath.replace("::", "@");
 		Process setParamProcess;
 		try {
@@ -630,15 +566,13 @@ public class AMESimManager {
 			// + amesimParameterDataPath + " "
 			// + amesimParameter.getValue();
 
-			setParamProcess = Runtime.getRuntime().exec(
-					"AMEPython updateAMESimParameter.py " + amesimDirectory
-							+ " " + modelName + ".ame" + " "
-							+ amesimParameterDataPath + " "
-							+ amesimParameter.getValue(), null,
-					new File("python"));
+			setParamProcess = Runtime
+					.getRuntime().exec(
+							"AMEPython updateAMESimParameter.py " + amesimDirectory + " " + modelName + ".ame" + " "
+									+ amesimParameterDataPath + " " + amesimParameter.getValue(),
+							null, new File("python"));
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					setParamProcess.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(setParamProcess.getInputStream()));
 			while (br.ready())
 				System.out.println(br.readLine());
 
@@ -649,8 +583,7 @@ public class AMESimManager {
 
 	}
 
-	public static void createAMESimGlobalParameter(
-			AMESimGlobalParameter amesimGlobalParameter, String modelName) {
+	public static void createAMESimGlobalParameter(AMESimGlobalParameter amesimGlobalParameter, String modelName) {
 		// TODO
 	}
 
@@ -662,8 +595,7 @@ public class AMESimManager {
 		// TODO
 	}
 
-	public static String getQualifiedName(EObject eObject,
-			StringBuffer qualifiedNameBuffer) {
+	public static String getQualifiedName(EObject eObject, StringBuffer qualifiedNameBuffer) {
 		String qualifiedName = null;
 		String eObjecClassName = eObject.eClass().getName();
 
@@ -725,8 +657,7 @@ public class AMESimManager {
 			qualifiedName = qualifiedName.replaceAll(" ", "_");
 		} else {
 			for (EAttribute eAttribute : eObject.eClass().getEAllAttributes()) {
-				if (eAttribute.getName().equals("name")
-						| eAttribute.getName().equals("id")) {
+				if (eAttribute.getName().equals("name") | eAttribute.getName().equals("id")) {
 					String name = (String) eObject.eGet(eAttribute);
 					if (qualifiedNameBuffer == null) {
 						qualifiedNameBuffer = new StringBuffer();
@@ -737,8 +668,7 @@ public class AMESimManager {
 					break;
 				}
 			}
-			if (!eObject.eContainer().eClass().getName()
-					.equals("WorkingDirectory")) {
+			if (!eObject.eContainer().eClass().getName().equals("WorkingDirectory")) {
 				getQualifiedName(eObject.eContainer(), qualifiedNameBuffer);
 			}
 			qualifiedName = qualifiedNameBuffer.toString();
@@ -750,8 +680,7 @@ public class AMESimManager {
 	public static String getShortQualifiedName(String qualifiedName) {
 		String[] qualifiedNameSegments = qualifiedName.split("/");
 		String[] newqualifiedNameSegmentsArray = new String[qualifiedNameSegments.length - 1];
-		System.arraycopy(qualifiedNameSegments, 1,
-				newqualifiedNameSegmentsArray, 0,
+		System.arraycopy(qualifiedNameSegments, 1, newqualifiedNameSegmentsArray, 0,
 				(qualifiedNameSegments.length - 1));
 		StringBuffer qNameBuffer = new StringBuffer();
 		int i = 0;
@@ -765,8 +694,7 @@ public class AMESimManager {
 		return qNameBuffer.toString();
 	}
 
-	private static Link[] getLinkedEReferences(
-			Collection<? extends EObject> elementCollection) {
+	private static Link[] getLinkedEReferences(Collection<? extends EObject> elementCollection) {
 
 		// counting the number of links
 		int linksCount = elementCollection.size();
@@ -800,8 +728,7 @@ public class AMESimManager {
 		for (EObject element : elementCollection) {
 			try {
 				URI linkedElementURI = null;
-				linkedElementURI = new URI(baseHTTPURI + "/services/"
-						+ projectId + "/" + objectType + "/"
+				linkedElementURI = new URI(baseHTTPURI + "/services/" + projectId + "/" + objectType + "/"
 						+ getQualifiedName(element, null));
 				Link link = new Link(linkedElementURI);
 				linksArray[linksArrayIndex] = link;
@@ -814,11 +741,9 @@ public class AMESimManager {
 		return linksArray;
 	}
 
-	public static void createAMESimElements(AMESimElementsToCreate newElements,
-			String modelName) {
+	public static void createAMESimElements(AMESimElementsToCreate newElements, String modelName) {
 
-		Service2PythonThread createPythonScriptThread = new Service2PythonThread(
-				newElements);
+		Service2PythonThread createPythonScriptThread = new Service2PythonThread(newElements);
 		createPythonScriptThread.start();
 		// createPythonScriptThread.wait();
 		try {
@@ -830,21 +755,17 @@ public class AMESimManager {
 
 		Process runPythonScriptProcess;
 		try {
-			String command = "AMEPython createAMESimElements.py "
-					+ amesimDirectory + " " + modelName + ".ame";
-			runPythonScriptProcess = Runtime.getRuntime().exec(command, null,
-					new File("python"));
+			String command = "AMEPython createAMESimElements.py " + amesimDirectory + " " + modelName + ".ame";
+			runPythonScriptProcess = Runtime.getRuntime().exec(command, null, new File("python"));
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					runPythonScriptProcess.getInputStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(runPythonScriptProcess.getInputStream()));
 			while (br.ready())
 				System.out.println(br.readLine());
 			int exitValue = runPythonScriptProcess.waitFor();
 			if (exitValue == 0) {
 				System.out.println("added " + newElements.getAbout());
 			} else {
-				System.out.println("NOT added " + newElements.getAbout()
-						+ "\tView log file!");
+				System.out.println("NOT added " + newElements.getAbout() + "\tView log file!");
 			}
 
 		} catch (IOException e) {
@@ -856,17 +777,23 @@ public class AMESimManager {
 		}
 
 	}
-	
-public static void writeRDF() {
-		
-		
-//	static Map<String, AMESimCircuit> qNameOslcAMESimCircuitMap = new HashMap<String, AMESimCircuit>();
-//	static Map<String, AMESimComponent> qNameOslcAMESimComponentMap = new HashMap<String, AMESimComponent>();
-//	static Map<String, AMESimLine> qNameOslcAMESimLineMap = new HashMap<String, AMESimLine>();
-//	static Map<String, AMESimPort> qNameOslcAMESimPortMap = new HashMap<String, AMESimPort>();
-//	static Map<String, AMESimParameter> qNameOslcAMESimParameterMap = new HashMap<String, AMESimParameter>();
-//	static Map<String, AMESimGlobalParameter> qNameOslcAMESimGlobalParameterMap = new HashMap<String, AMESimGlobalParameter>();
-		
+
+	public static void writeRDF() {
+
+		// static Map<String, AMESimCircuit> qNameOslcAMESimCircuitMap = new
+		// HashMap<String, AMESimCircuit>();
+		// static Map<String, AMESimComponent> qNameOslcAMESimComponentMap = new
+		// HashMap<String, AMESimComponent>();
+		// static Map<String, AMESimLine> qNameOslcAMESimLineMap = new
+		// HashMap<String, AMESimLine>();
+		// static Map<String, AMESimPort> qNameOslcAMESimPortMap = new
+		// HashMap<String, AMESimPort>();
+		// static Map<String, AMESimParameter> qNameOslcAMESimParameterMap = new
+		// HashMap<String, AMESimParameter>();
+		// static Map<String, AMESimGlobalParameter>
+		// qNameOslcAMESimGlobalParameterMap = new HashMap<String,
+		// AMESimGlobalParameter>();
+
 		ArrayList<Object> objectList = new ArrayList<Object>();
 		objectList.addAll(qNameOslcAMESimCircuitMap.values());
 		objectList.addAll(qNameOslcAMESimComponentMap.values());
@@ -874,35 +801,28 @@ public static void writeRDF() {
 		objectList.addAll(qNameOslcAMESimPortMap.values());
 		objectList.addAll(qNameOslcAMESimParameterMap.values());
 		objectList.addAll(qNameOslcAMESimGlobalParameterMap.values());
-		
-		int arraySize = qNameOslcAMESimCircuitMap.values().size() 
-				+ qNameOslcAMESimComponentMap.values().size() 
-				+ qNameOslcAMESimLineMap.values().size()
-				+ qNameOslcAMESimPortMap.values().size()
-				+ qNameOslcAMESimParameterMap.values().size()
-				+ qNameOslcAMESimGlobalParameterMap.values().size();
-		Object[] objects = new Object[arraySize];		
+
+		int arraySize = qNameOslcAMESimCircuitMap.values().size() + qNameOslcAMESimComponentMap.values().size()
+				+ qNameOslcAMESimLineMap.values().size() + qNameOslcAMESimPortMap.values().size()
+				+ qNameOslcAMESimParameterMap.values().size() + qNameOslcAMESimGlobalParameterMap.values().size();
+		Object[] objects = new Object[arraySize];
 		objects = objectList.toArray();
-		
-		if(AMESim2RDF.outputMode.equals("rdfxml")){
+
+		if (AMESim2RDF.outputMode.equals("rdfxml")) {
 			// print RDF in file
 			try {
 				com.hp.hpl.jena.rdf.model.Model model = JenaModelHelper.createJenaModel(objects);
 				RDFWriter writer = model.getWriter("RDF/XML");
-		        writer.setProperty("showXmlDeclaration",
-		                           "false");
-		        writer.setErrorHandler(new ErrorHandler());    
-		        
-		        File newFile = new File(AMESim2RDF.rdfFileLocation);
-		        newFile.createNewFile();
-		        
-		        OutputStream outputStream = new FileOutputStream(AMESim2RDF.rdfFileLocation);	      	       	        
-		        writer.write(model,
-		                     outputStream,
-		                     null);
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | DatatypeConfigurationException
-					| OslcCoreApplicationException e) {
+				writer.setProperty("showXmlDeclaration", "false");
+				writer.setErrorHandler(new ErrorHandler());
+
+				File newFile = new File(AMESim2RDF.rdfFileLocation);
+				newFile.createNewFile();
+
+				OutputStream outputStream = new FileOutputStream(AMESim2RDF.rdfFileLocation);
+				writer.write(model, outputStream, null);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| DatatypeConfigurationException | OslcCoreApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (FileNotFoundException e) {
@@ -912,36 +832,30 @@ public static void writeRDF() {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else if(AMESim2RDF.outputMode.equals("jenatdb")){
+		} else if (AMESim2RDF.outputMode.equals("jenatdb")) {
 			try {
-				if(!new File(AMESim2RDF.tdbdir).exists()){
+				if (!new File(AMESim2RDF.tdbdir).exists()) {
 					Files.createDirectories(Paths.get(AMESim2RDF.tdbdir));
 				}
-				
-				
+
 				com.hp.hpl.jena.rdf.model.Model model = JenaModelHelper.createJenaModel(objects);
 				com.hp.hpl.jena.query.Dataset dataset = com.hp.hpl.jena.tdb.TDBFactory.createDataset(AMESim2RDF.tdbdir);
 				com.hp.hpl.jena.rdf.model.Model tdbModel = dataset.getDefaultModel();
-				
+
 				tdbModel.add(model);
-				
+
 				dataset.close();
-				
-				
-				
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | DatatypeConfigurationException
-					| OslcCoreApplicationException e) {
+
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| DatatypeConfigurationException | OslcCoreApplicationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
+			}
 		}
-		
-		
+
 	}
 
 }
