@@ -1,0 +1,3 @@
+Run the executable for example using this command:
+
+amesim2rdf.exe -ame "C:\Users\rb16964\git\amesim2rdf\amesim2rdf\amesimmodels\BrakingSystem.ame,C:\Users\rb16964\git\amesim2rdf\amesim2rdf\amesimmodels\FlatTwin.ame" -t rdfxml -f generated.rdf
